@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66253EA6236C00CF00893864 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66253EA5236C00CF00893864 /* AVFoundation.framework */; };
+		66253EA8236C00D500893864 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66253EA7236C00D500893864 /* VideoToolbox.framework */; };
+		66253EAA236C00E000893864 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66253EA9236C00E000893864 /* AudioToolbox.framework */; };
 		665442B3236BE12F0089102A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 665442B2236BE12F0089102A /* AppDelegate.m */; };
-		665442B6236BE12F0089102A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 665442B5236BE12F0089102A /* SceneDelegate.m */; };
 		665442B9236BE12F0089102A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665442B8236BE12F0089102A /* ViewController.m */; };
 		665442BC236BE12F0089102A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 665442BA236BE12F0089102A /* Main.storyboard */; };
 		665442BE236BE1320089102A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 665442BD236BE1320089102A /* Assets.xcassets */; };
@@ -17,11 +19,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		66253EA5236C00CF00893864 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		66253EA7236C00D500893864 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		66253EA9236C00E000893864 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		665442AE236BE12F0089102A /* testAACEncode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testAACEncode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		665442B1236BE12F0089102A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		665442B2236BE12F0089102A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		665442B4236BE12F0089102A /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		665442B5236BE12F0089102A /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		665442B7236BE12F0089102A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		665442B8236BE12F0089102A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		665442BB236BE12F0089102A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -36,17 +39,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66253EAA236C00E000893864 /* AudioToolbox.framework in Frameworks */,
+				66253EA8236C00D500893864 /* VideoToolbox.framework in Frameworks */,
+				66253EA6236C00CF00893864 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66253EA4236C00CF00893864 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				66253EA9236C00E000893864 /* AudioToolbox.framework */,
+				66253EA7236C00D500893864 /* VideoToolbox.framework */,
+				66253EA5236C00CF00893864 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		665442A5236BE12F0089102A = {
 			isa = PBXGroup;
 			children = (
 				665442B0236BE12F0089102A /* testAACEncode */,
 				665442AF236BE12F0089102A /* Products */,
+				66253EA4236C00CF00893864 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,8 +80,6 @@
 			children = (
 				665442B1236BE12F0089102A /* AppDelegate.h */,
 				665442B2236BE12F0089102A /* AppDelegate.m */,
-				665442B4236BE12F0089102A /* SceneDelegate.h */,
-				665442B5236BE12F0089102A /* SceneDelegate.m */,
 				665442B7236BE12F0089102A /* ViewController.h */,
 				665442B8236BE12F0089102A /* ViewController.m */,
 				665442BA236BE12F0089102A /* Main.storyboard */,
@@ -149,7 +164,6 @@
 				665442B9236BE12F0089102A /* ViewController.m in Sources */,
 				665442B3236BE12F0089102A /* AppDelegate.m in Sources */,
 				665442C4236BE1320089102A /* main.m in Sources */,
-				665442B6236BE12F0089102A /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +239,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -277,7 +291,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -290,6 +304,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4QFB3YX3ND;
 				INFOPLIST_FILE = testAACEncode/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -306,6 +321,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4QFB3YX3ND;
 				INFOPLIST_FILE = testAACEncode/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
