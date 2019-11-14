@@ -105,12 +105,12 @@
     dispatch_async(self.aacEncoderQueue, ^{
         
         if(!_audioConverter){
+            //创建编码器
             [self setupEncoderFromSampleBuffer:sampleBuffer];
         }
         
         CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
         CFRetain(blockBuffer);
-        
         
         //这里拿到pcm的裸数据， Buffer指针和pcmBufferSize大小
         OSStatus status = CMBlockBufferGetDataPointer(blockBuffer, 0, NULL, &_pcmBufferSize, &_pcmBuffer);
@@ -125,9 +125,15 @@
             outAudioBufferList.mBuffers[0].mData = _aacBuffer;
             
             AudioStreamPacketDescription *outPacketDescription = NULL;
+            
             UInt32 ioOutputDataPacketSize = 1;
             
-            status = AudioConverterFillComplexBuffer(_audioConverter, inInputDataProc, (__bridge void *)(self), &ioOutputDataPacketSize, &outAudioBufferList, outPacketDescription);
+            status = AudioConverterFillComplexBuffer(_audioConverter,  //转码器
+                                                     inInputDataProc,  //回调函数，用于将PCM数据喂给编码器
+                                                     (__bridge void *)(self), //回调对象
+                                                     &ioOutputDataPacketSize,   //输出包大小
+                                                     &outAudioBufferList,
+                                                     outPacketDescription);
             NSData *rawAAC;
             if(status == 0){
                 rawAAC = [NSData dataWithBytes:outAudioBufferList.mBuffers[0].mData length:outAudioBufferList.mBuffers[0].mDataByteSize];
@@ -230,31 +236,49 @@ OSStatus inInputDataProc(AudioConverterRef inAudioConverter, UInt32 *ioNumberDat
     if (status != 0) {
         NSLog(@"setup converter: %d",(int)status);
     }
+    
+    //修改编码率的码率
+    UInt32 outputBitrate = 64000;
+    UInt32 propSize =  sizeof(outputBitrate);
+    status = AudioConverterSetProperty(_audioConverter, kAudioConverterEncodeBitRate, propSize, &outputBitrate);
+    
+    //AudioConverterGetProperty方法查询一下是否设置成功
+    UInt32 value = 0;
+    UInt32 size = sizeof(value);
+    AudioConverterGetProperty(_audioConverter,kAudioConverterPropertyMaximumOutputPacketSize, &size, &value);
+    
 }
 
+
+/// 音频描述符
+/// @param type 编解码类型
+/// @param manufacturer 指明是软编还是硬编码
 - (AudioClassDescription *)getAudioClassDescriptionWithType:(UInt32)type fromManufacturer:(UInt32)manufacturer{
+    
     static AudioClassDescription desc;
     UInt32 encoderSpecifier = type;
     OSStatus st;
     
     UInt32 size;
-    //拿到音频编码的格式大小
+    //拿到输出格式的size大小
     st = AudioFormatGetPropertyInfo(kAudioFormatProperty_Encoders, sizeof(encoderSpecifier), &encoderSpecifier, &size);
     
     if(st){
         NSLog(@"error getting audio format propery info: %d", (int)(st));
         return nil;
     }
+    
     //一共有count这么多个编码的格式
     unsigned int count = size / sizeof(AudioClassDescription);
     
-    //获取编码器数组
+    //定义一个count容量的数组，将指定编码器的类型全部取出来放到一个数组里
     AudioClassDescription descriptions[count];
     st = AudioFormatGetProperty(kAudioFormatProperty_Encoders, sizeof(encoderSpecifier), &encoderSpecifier, &size, descriptions);
     if(st){
         NSLog(@"error getting audio format propery: %d", (int)(st));
         return nil;
     }
+    //判断mSubType和mManufacturer，两者都相等则表示找到这个对应的编码器
     for (unsigned int i = 0; i < count; i++) {
         if((type == descriptions[i].mSubType) && (manufacturer == descriptions[i].mManufacturer)){
             memcpy(&desc, &(descriptions[i]), sizeof(desc));
